@@ -18,7 +18,7 @@ export const ThemeSwitcher = memo(function ThemeSwitcher({ api }: { api: API }) 
 
   useEffect(() => {
     api.setAddonShortcut(ADDON_ID, {
-      label: "Toggle Theme [D]",
+      label: "Toggle Theme [O]",
       defaultShortcut: ["O"],
       actionName: "tailwind-theme",
       showInMenu: false,

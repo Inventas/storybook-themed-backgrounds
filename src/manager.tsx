@@ -1,7 +1,7 @@
 import React from "react";
 import { addons, types } from "storybook/internal/manager-api";
 
-import { ThemeSwitcher } from "./components/ThemeSwitcher";
+import { ThemeSwitcher } from "./components/theme-switcher";
 import { ADDON_ID, THEME_SWITCHER_ID } from "./constants";
 
 /**

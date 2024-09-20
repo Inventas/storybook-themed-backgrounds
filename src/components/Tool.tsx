@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect } from "react";
 import { useGlobals, type API } from "storybook/internal/manager-api";
 import { IconButton } from "storybook/internal/components";
 import { ADDON_ID, KEY, TOOL_ID } from "../constants";
-import { LightningIcon } from "@storybook/icons";
+import { PaintBrushIcon } from "@storybook/icons";
 
 export const Tool = memo(function MyAddonSelector({ api }: { api: API }) {
   const [globals, updateGlobals, storyGlobals] = useGlobals();
@@ -34,7 +34,7 @@ export const Tool = memo(function MyAddonSelector({ api }: { api: API }) {
       title="Enable my addon"
       onClick={toggle}
     >
-      <LightningIcon />
+      <PaintBrushIcon />
     </IconButton>
   );
 });

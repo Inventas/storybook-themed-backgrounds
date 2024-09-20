@@ -10,7 +10,7 @@ export interface ClassNameStrategyConfiguration {
 }
 
 const DEFAULT_ELEMENT_SELECTOR = 'html';
-2
+
 const classStringToArray = (classString: string) => classString.split(' ').filter(Boolean);
 
 // TODO check with @kasperpeulen: change the types so they can be correctly inferred from context e.g. <Story extends (...args: any[]) => any>

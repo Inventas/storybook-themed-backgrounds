@@ -1,21 +1,14 @@
-import React from "react";
-import { addons, types } from "storybook/internal/manager-api";
+import { addons, types } from 'storybook/internal/manager-api';
 
-import { ThemeSwitcher } from "./components/theme-switcher";
-import { ADDON_ID, THEME_SWITCHER_ID } from "./constants";
+import { ADDON_ID, PARAM_KEY, THEME_SWITCHER_ID } from './constants';
+import { ThemeSwitcher } from './theme-switcher';
 
-/**
- * Note: if you want to use JSX in this file, rename it to `manager.tsx`
- * and update the entry prop in tsup.config.ts to use "src/manager.tsx",
- */
-
-// Register the addon
-addons.register(ADDON_ID, (api) => {
-  // Register a tool
+addons.register(ADDON_ID, () => {
   addons.add(THEME_SWITCHER_ID, {
-    title: "Tailwind Themes",
+    title: 'Themes',
     type: types.TOOL,
     match: ({ viewMode, tabId }) => !!(viewMode && viewMode.match(/^(story|docs)$/)) && !tabId,
-    render: () => <ThemeSwitcher api={api} />,
+    render: ThemeSwitcher,
+    paramKey: PARAM_KEY,
   });
 });

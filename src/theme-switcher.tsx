@@ -1,27 +1,27 @@
-import React, { memo, useCallback, useEffect } from "react";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import React from 'react';
+
+import { IconButton, TooltipLinkList, WithTooltip } from 'storybook/internal/components';
 import {
-  type API,
   addons,
   useAddonState,
   useChannel,
   useGlobals,
   useParameter,
-} from "storybook/internal/manager-api";
-
-import { IconButton, TooltipLinkList, WithTooltip } from 'storybook/internal/components';
+} from 'storybook/internal/manager-api';
 import { styled } from 'storybook/internal/theming';
+
 import { PaintBrushIcon } from '@storybook/icons';
+
+import type { ThemeAddonState, ThemeParameters } from './constants';
 import {
-  ADDON_ID,
-  GLOBAL_KEY,
   DEFAULT_ADDON_STATE,
   DEFAULT_THEME_PARAMETERS,
   GLOBAL_KEY as KEY,
   PARAM_KEY,
+  THEME_SWITCHER_ID,
   THEMING_EVENTS,
-  ThemeAddonState,
-  ThemeParameters, THEME_SWITCHER_ID
-} from "../constants";
+} from './constants';
 
 const IconButtonLabel = styled.div(({ theme }) => ({
   fontSize: theme.typography.size.s2 - 1,
@@ -30,7 +30,7 @@ const IconButtonLabel = styled.div(({ theme }) => ({
 const hasMultipleThemes = (themesList: ThemeAddonState['themesList']) => themesList.length > 1;
 const hasTwoThemes = (themesList: ThemeAddonState['themesList']) => themesList.length === 2;
 
-export const ThemeSwitcher = memo(function ThemeSwitcher({ api }: { api: API }) {
+export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
   const { themeOverride, disable } = useParameter<ThemeParameters>(
     PARAM_KEY,
     DEFAULT_THEME_PARAMETERS

@@ -1,9 +1,9 @@
 import { useEffect } from 'storybook/internal/preview-api';
 
 import { global as globalThis } from '@storybook/global';
-import { Pre } from '../components/Pre';
 
-import { withThemeByClassName } from '../decorators';
+import { withThemeByClassName } from "../../src";
+import { Pre } from "../../src/Pre";
 
 const cleanup = () => {
   const existing = globalThis.document.querySelector('style[data-theme-css]');
@@ -42,19 +42,36 @@ export default {
   args: {
     text: 'Testing the themes',
   },
+  globals: {
+    sb_theme: 'light',
+  },
   parameters: {
     chromatic: { disable: true },
     themes: { disable: false },
   },
-  globals: {
-    sb_theme: 'light',
-  },
   decorators: [addStyleSheetDecorator],
 };
 
-export const SetGlobal = {
-  globals: {
-    theme: 'b',
+export const SetOverride = {
+  parameters: {
+    themes: {
+      themeOverride: 'b',
+    },
+  },
+  decorators: [
+    withThemeByClassName({
+      defaultTheme: 'a',
+      themes: { a: 'theme-a', b: 'theme-b' },
+      parentSelector: '#storybook-root > *',
+    }),
+  ],
+};
+
+export const Disabled = {
+  parameters: {
+    themes: {
+      disable: true,
+    },
   },
   decorators: [
     withThemeByClassName({

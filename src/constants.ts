@@ -1,7 +1,7 @@
-export const ADDON_ID = "tailwind-theme";
+export const PARAM_KEY = 'themes' as const;
+export const GLOBAL_KEY = 'theme' as const;
+export const ADDON_ID = `storybook/${PARAM_KEY}` as const;
 export const THEME_SWITCHER_ID = `${ADDON_ID}/theme-switcher` as const;
-export const GLOBAL_KEY = `tailwind-theme`;
-export const PARAM_KEY = "tailwind-theme"
 
 export interface ThemeAddonState {
   themesList: string[];

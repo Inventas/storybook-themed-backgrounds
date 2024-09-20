@@ -1,13 +1,13 @@
 import { useEffect } from 'storybook/internal/preview-api';
 
 import { global as globalThis } from '@storybook/global';
-import { Pre } from '../components/Pre';
 
 import {
   withThemeByClassName,
   withThemeByDataAttribute,
   withThemeFromJSXProvider,
-} from '../decorators';
+} from "../../src";
+import { Pre } from "../../src/Pre";
 
 const cleanup = () => {
   const existing = globalThis.document.querySelector('style[data-theme-css]');

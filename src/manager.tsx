@@ -1,7 +1,7 @@
 import React from "react";
 import { addons, types } from "storybook/internal/manager-api";
 
-import { Tool } from "./components/Tool";
+import { ThemeSwitcher } from "./components/ThemeSwitcher";
 import { ADDON_ID, THEME_SWITCHER_ID } from "./constants";
 
 /**
@@ -13,9 +13,9 @@ import { ADDON_ID, THEME_SWITCHER_ID } from "./constants";
 addons.register(ADDON_ID, (api) => {
   // Register a tool
   addons.add(THEME_SWITCHER_ID, {
+    title: "Tailwind Themes",
     type: types.TOOL,
-    title: "My addon",
     match: ({ viewMode, tabId }) => !!(viewMode && viewMode.match(/^(story|docs)$/)) && !tabId,
-    render: () => <Tool api={api} />,
+    render: () => <ThemeSwitcher api={api} />,
   });
 });

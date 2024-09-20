@@ -4,7 +4,7 @@ import { IconButton } from "storybook/internal/components";
 import { ADDON_ID, GLOBAL_KEY, THEME_SWITCHER_ID } from "../constants";
 import { PaintBrushIcon } from "@storybook/icons";
 
-export const Tool = memo(function MyAddonSelector({ api }: { api: API }) {
+export const ThemeSwitcher = memo(function ThemeSwitcher({ api }: { api: API }) {
   const [globals, updateGlobals, storyGlobals] = useGlobals();
 
   const isLocked = GLOBAL_KEY in storyGlobals;
@@ -18,9 +18,9 @@ export const Tool = memo(function MyAddonSelector({ api }: { api: API }) {
 
   useEffect(() => {
     api.setAddonShortcut(ADDON_ID, {
-      label: "Toggle Measure [O]",
+      label: "Toggle Theme [D]",
       defaultShortcut: ["O"],
-      actionName: "outline",
+      actionName: "tailwind-theme",
       showInMenu: false,
       action: toggle,
     });

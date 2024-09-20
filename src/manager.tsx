@@ -2,7 +2,7 @@ import React from "react";
 import { addons, types } from "storybook/internal/manager-api";
 
 import { Tool } from "./components/Tool";
-import { ADDON_ID, TOOL_ID } from "./constants";
+import { ADDON_ID, THEME_SWITCHER_ID } from "./constants";
 
 /**
  * Note: if you want to use JSX in this file, rename it to `manager.tsx`
@@ -12,7 +12,7 @@ import { ADDON_ID, TOOL_ID } from "./constants";
 // Register the addon
 addons.register(ADDON_ID, (api) => {
   // Register a tool
-  addons.add(TOOL_ID, {
+  addons.add(THEME_SWITCHER_ID, {
     type: types.TOOL,
     title: "My addon",
     match: ({ viewMode, tabId }) => !!(viewMode && viewMode.match(/^(story|docs)$/)) && !tabId,

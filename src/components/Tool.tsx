@@ -1,18 +1,18 @@
 import React, { memo, useCallback, useEffect } from "react";
 import { useGlobals, type API } from "storybook/internal/manager-api";
 import { IconButton } from "storybook/internal/components";
-import { ADDON_ID, KEY, TOOL_ID } from "../constants";
+import { ADDON_ID, GLOBAL_KEY, THEME_SWITCHER_ID } from "../constants";
 import { PaintBrushIcon } from "@storybook/icons";
 
 export const Tool = memo(function MyAddonSelector({ api }: { api: API }) {
   const [globals, updateGlobals, storyGlobals] = useGlobals();
 
-  const isLocked = KEY in storyGlobals;
-  const isActive = !!globals[KEY];
+  const isLocked = GLOBAL_KEY in storyGlobals;
+  const isActive = !!globals[GLOBAL_KEY];
 
   const toggle = useCallback(() => {
     updateGlobals({
-      [KEY]: !isActive,
+      [GLOBAL_KEY]: !isActive,
     });
   }, [isActive]);
 
@@ -28,7 +28,7 @@ export const Tool = memo(function MyAddonSelector({ api }: { api: API }) {
 
   return (
     <IconButton
-      key={TOOL_ID}
+      key={THEME_SWITCHER_ID}
       active={isActive}
       disabled={isLocked}
       title="Enable my addon"

@@ -10,7 +10,7 @@
  */
 import type { ProjectAnnotations, Renderer } from "storybook/internal/types";
 
-import { KEY } from "./constants";
+import { GLOBAL_KEY } from "./constants";
 import { withGlobals } from "./withGlobals";
 
 /**
@@ -21,7 +21,7 @@ import { withGlobals } from "./withGlobals";
 const preview: ProjectAnnotations<Renderer> = {
   decorators: [withGlobals],
   initialGlobals: {
-    [KEY]: false,
+    [GLOBAL_KEY]: false,
   },
 };
 

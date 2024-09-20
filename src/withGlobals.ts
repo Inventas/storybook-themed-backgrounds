@@ -5,14 +5,14 @@ import type {
   PartialStoryFn as StoryFunction,
 } from "storybook/internal/types";
 
-import { KEY } from "./constants";
+import { GLOBAL_KEY } from "./constants";
 
 export const withGlobals = (
   StoryFn: StoryFunction<Renderer>,
   context: StoryContext<Renderer>,
 ) => {
   const [globals] = useGlobals();
-  const myAddon = globals[KEY];
+  const myAddon = globals[GLOBAL_KEY];
   const canvas = context.canvasElement as ParentNode;
 
   // Is the addon being used in the docs panel
@@ -35,10 +35,10 @@ export const withGlobals = (
  */
 function addExtraContentToStory(canvas: ParentNode, state: Object) {
   const preElement =
-    canvas.querySelector(`[data-id="${KEY}"]`) ||
+    canvas.querySelector(`[data-id="${GLOBAL_KEY}"]`) ||
     canvas.appendChild(document.createElement("pre"));
 
-  preElement.setAttribute("data-id", KEY);
+  preElement.setAttribute("data-id", GLOBAL_KEY);
   preElement.setAttribute(
     "style",
     `

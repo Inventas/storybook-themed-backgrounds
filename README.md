@@ -30,7 +30,7 @@ Managing State and interacting with a story:
 - `src/withRoundTrip.ts` & `src/Panel.tsx` demonstrates two-way communication using channels.
 - `src/Tab.tsx` demonstrates how to use `useParameter` to access the current story's parameters.
 
-Your addon might use one or more of these patterns. Feel free to delete unused code. Update `src/manager.ts` and `src/preview.ts` accordingly.
+Your addon might use one or more of these patterns. Feel free to delete unused code. Update `src/manager.ts` and `src/preview.tsx` accordingly.
 
 Lastly, configure you addon name in `src/constants.ts`.
 
@@ -46,7 +46,7 @@ Since each of these places represents a different environment with different fea
 
 You can define which modules match which environments in the [`package.json#bundler`](./package.json) property:
 
-- `exportEntries` is a list of module entries that users can manually import from anywhere they need to. For example, you could have decorators that users need to import into their `preview.ts` file or utility functions that can be used in their `main.ts` files.
+- `exportEntries` is a list of module entries that users can manually import from anywhere they need to. For example, you could have decorators that users need to import into their `preview.tsx` file or utility functions that can be used in their `main.ts` files.
 - `managerEntries` is a list of module entries meant only for the manager UI. These modules will be bundled to ESM and won't include types since they are mostly loaded by Storybook directly.
 - `previewEntries` is a list of module entries meant only for the preview UI. These modules will be bundled to ESM and won't include types since they are mostly loaded by Storybook directly.
 

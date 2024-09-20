@@ -1,6 +1,6 @@
 export const ADDON_ID = "my-addon";
-export const TOOL_ID = `${ADDON_ID}/tool`;
-export const KEY = `my-addon`;
+export const THEME_SWITCHER_ID = `${ADDON_ID}/theme-switcher` as const;
+export const GLOBAL_KEY = `my-addon`;
 
 export const EVENTS = {
   RESULT: `${ADDON_ID}/result`,

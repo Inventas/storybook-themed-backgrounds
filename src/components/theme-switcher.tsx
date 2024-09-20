@@ -1,40 +1,131 @@
 import React, { memo, useCallback, useEffect } from "react";
-import { useGlobals, type API } from "storybook/internal/manager-api";
-import { IconButton } from "storybook/internal/components";
-import { ADDON_ID, GLOBAL_KEY, THEME_SWITCHER_ID } from "../constants";
-import { PaintBrushIcon } from "@storybook/icons";
+import {
+  type API,
+  addons,
+  useAddonState,
+  useChannel,
+  useGlobals,
+  useParameter,
+} from "storybook/internal/manager-api";
+
+import { IconButton, TooltipLinkList, WithTooltip } from 'storybook/internal/components';
+import { styled } from 'storybook/internal/theming';
+import { PaintBrushIcon } from '@storybook/icons';
+import {
+  ADDON_ID,
+  GLOBAL_KEY,
+  DEFAULT_ADDON_STATE,
+  DEFAULT_THEME_PARAMETERS,
+  GLOBAL_KEY as KEY,
+  PARAM_KEY,
+  THEMING_EVENTS,
+  ThemeAddonState,
+  ThemeParameters, THEME_SWITCHER_ID
+} from "../constants";
+
+const IconButtonLabel = styled.div(({ theme }) => ({
+  fontSize: theme.typography.size.s2 - 1,
+}));
+
+const hasMultipleThemes = (themesList: ThemeAddonState['themesList']) => themesList.length > 1;
+const hasTwoThemes = (themesList: ThemeAddonState['themesList']) => themesList.length === 2;
 
 export const ThemeSwitcher = memo(function ThemeSwitcher({ api }: { api: API }) {
-  const [globals, updateGlobals, storyGlobals] = useGlobals();
+  const { themeOverride, disable } = useParameter<ThemeParameters>(
+    PARAM_KEY,
+    DEFAULT_THEME_PARAMETERS
+  ) as ThemeParameters;
+  const [{ theme: selected }, updateGlobals, storyGlobals] = useGlobals();
 
-  const isLocked = GLOBAL_KEY in storyGlobals;
-  const isActive = !!globals[GLOBAL_KEY];
+  const channel = addons.getChannel();
+  const fromLast = channel.last(THEMING_EVENTS.REGISTER_THEMES);
+  const initializeThemeState = Object.assign({}, DEFAULT_ADDON_STATE, {
+    themesList: fromLast?.[0]?.themes || [],
+    themeDefault: fromLast?.[0]?.defaultTheme || '',
+  });
 
-  const toggle = useCallback(() => {
-    updateGlobals({
-      [GLOBAL_KEY]: !isActive,
-    });
-  }, [isActive]);
-
-  useEffect(() => {
-    api.setAddonShortcut(ADDON_ID, {
-      label: "Toggle Theme [O]",
-      defaultShortcut: ["O"],
-      actionName: "tailwind-theme",
-      showInMenu: false,
-      action: toggle,
-    });
-  }, [toggle, api]);
-
-  return (
-    <IconButton
-      key={THEME_SWITCHER_ID}
-      active={isActive}
-      disabled={isLocked}
-      title="Enable my addon"
-      onClick={toggle}
-    >
-      <PaintBrushIcon />
-    </IconButton>
+  const [{ themesList, themeDefault }, updateState] = useAddonState<ThemeAddonState>(
+    THEME_SWITCHER_ID,
+    initializeThemeState
   );
+
+  const isLocked = KEY in storyGlobals || !!themeOverride;
+
+  useChannel({
+    [THEMING_EVENTS.REGISTER_THEMES]: ({ themes, defaultTheme }) => {
+      updateState((state) => ({
+        ...state,
+        themesList: themes,
+        themeDefault: defaultTheme,
+      }));
+    },
+  });
+
+  const themeName = selected || themeDefault;
+  let label = '';
+  if (isLocked) {
+    label = 'Story override';
+  } else if (themeName) {
+    label = `${themeName} theme`;
+  }
+
+  if (disable) {
+    return null;
+  }
+
+  if (hasTwoThemes(themesList)) {
+    const currentTheme = selected || themeDefault;
+    const alternateTheme = themesList.find((theme) => theme !== currentTheme);
+    return (
+      <IconButton
+        disabled={isLocked}
+        key={THEME_SWITCHER_ID}
+        active={!themeOverride}
+        title="Theme"
+        onClick={() => {
+          updateGlobals({ theme: alternateTheme });
+        }}
+      >
+        <PaintBrushIcon />
+        {label ? <IconButtonLabel>{label}</IconButtonLabel> : null}
+      </IconButton>
+    );
+  }
+
+  if (hasMultipleThemes(themesList)) {
+    return (
+      <WithTooltip
+        placement="top"
+        trigger="click"
+        closeOnOutsideClick
+        tooltip={({ onHide }) => {
+          return (
+            <TooltipLinkList
+              links={themesList.map((theme) => ({
+                id: theme,
+                title: theme,
+                active: selected === theme,
+                onClick: () => {
+                  updateGlobals({ theme });
+                  onHide();
+                },
+              }))}
+            />
+          );
+        }}
+      >
+        <IconButton
+          key={THEME_SWITCHER_ID}
+          active={!themeOverride}
+          title="Theme"
+          disabled={isLocked}
+        >
+          <PaintBrushIcon />
+          {label && <IconButtonLabel>{label}</IconButtonLabel>}
+        </IconButton>
+      </WithTooltip>
+    );
+  }
+
+  return null;
 });

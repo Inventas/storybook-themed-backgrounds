@@ -1,6 +1,6 @@
-export const ADDON_ID = "my-addon";
+export const ADDON_ID = "tailwind-theme";
 export const THEME_SWITCHER_ID = `${ADDON_ID}/theme-switcher` as const;
-export const GLOBAL_KEY = `my-addon`;
+export const GLOBAL_KEY = `tailwind-theme`;
 export const PARAM_KEY = "tailwind-theme"
 
 export interface ThemeAddonState {

@@ -9,20 +9,23 @@
  * https://storybook.js.org/docs/react/writing-stories/decorators
  */
 import type { ProjectAnnotations, Renderer } from "storybook/internal/types";
-
+import { GLOBAL_KEY as KEY } from './constants';
 import { GLOBAL_KEY } from "./constants";
-import { withGlobals } from "./withGlobals";
+// import { withGlobals } from "./withGlobals";
 
 /**
  * Note: if you want to use JSX in this file, rename it to `preview.tsx`
  * and update the entry prop in tsup.config.ts to use "src/preview.tsx",
  */
 
-const preview: ProjectAnnotations<Renderer> = {
-  decorators: [withGlobals],
-  initialGlobals: {
-    [GLOBAL_KEY]: '',
-  },
+// const preview: ProjectAnnotations<Renderer> = {
+//   // decorators: [withGlobals],
+//   initialGlobals: {
+//     [GLOBAL_KEY]: '',
+//   },
+// };
+export const initialGlobals: ProjectAnnotations<Renderer>['initialGlobals'] = {
+  [KEY]: '',
 };
 
-export default preview;
+// export default preview;

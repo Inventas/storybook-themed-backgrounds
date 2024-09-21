@@ -10,5 +10,5 @@ export interface Config {
   disable: boolean;
 }
 
-export type GlobalState = { value: string | undefined; grid: boolean };
-export type GlobalStateUpdate = Partial<GlobalState>;
+export type BackgroundGlobalState = { value: string | undefined; grid: boolean };
+export type BackgroundGlobalStateUpdate = Partial<BackgroundGlobalState>;

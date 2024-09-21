@@ -13,9 +13,9 @@ import { styled } from 'storybook/internal/theming';
 
 import { PaintBrushIcon, CircleIcon, GridIcon, PhotoIcon, RefreshIcon } from '@storybook/icons';
 
-import { DEFAULT_BACKGROUNDS } from './defaults';
-import type { Background, BackgroundMap, Config, GlobalStateUpdate } from './types';
-import { PARAMETER_KEY, ThemeAddonState, ThemeParameters } from "./constants";
+import { DEFAULT_BACKGROUNDS } from '../defaults';
+import type { Background, BackgroundMap, Config, BackgroundGlobalStateUpdate } from '../types';
+import { BACKGROUND_KEY, PARAMETER_KEY, ThemeAddonState, ThemeParameters } from "../constants";
 import {
   DEFAULT_ADDON_STATE,
   DEFAULT_THEME_PARAMETERS,
@@ -23,7 +23,7 @@ import {
   PARAM_KEY,
   THEME_SWITCHER_ID,
   THEMING_EVENTS,
-} from './constants';
+} from '../constants';
 
 const IconButtonLabel = styled.div(({ theme }) => ({
   fontSize: theme.typography.size.s2 - 1,
@@ -92,24 +92,14 @@ export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
     return null;
   }
 
-  if (hasTwoThemes(themesList)) {
-    const currentTheme = selected || themeDefault;
-    const alternateTheme = themesList.find((theme) => theme !== currentTheme);
-    return (
-      <IconButton
-        disabled={isLocked}
-        key={THEME_SWITCHER_ID}
-        active={!themeOverride}
-        title="Theme"
-        onClick={() => {
-          updateGlobals({ theme: alternateTheme });
-        }}
-      >
-        <PaintBrushIcon />
-        {label ? <IconButtonLabel>{label}</IconButtonLabel> : null}
-      </IconButton>
-    );
-  }
+  const updateBackground = useCallback(
+    (input: BackgroundGlobalStateUpdate) => {
+      updateGlobals({
+        [BACKGROUND_KEY]: input,
+      });
+    },
+    [updateGlobals]
+  );
 
   const backgrounds: {
     theme: string;
@@ -131,60 +121,57 @@ export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
     }
   ]
 
-  if (hasMultipleThemes(themesList)) {
-    return (
-      <WithTooltip
-        placement="top"
-        trigger="click"
-        closeOnOutsideClick
-        tooltip={({ onHide }) => {
-          return (<div>
-            {backgrounds.map((background) => (
-              <Fragment key={background.theme}>
-                <ThemeHeader>
-                  {background.theme}
-                </ThemeHeader>
-                <TooltipLinkList
-                  links={background.items.map((item) => ({
-                    id: item.value,
-                    title: item.name,
-                    active: selected === item.value,
-                    onClick: () => {
-                      updateGlobals({ theme: background.theme });
-                      onHide();
-                    },
-                  }))}
-                />
-              </Fragment>
-            ))}
-          </div>)
-          // return (
-          //   <TooltipLinkList
-          //     links={themesList.map((theme) => ({
-          //       id: theme,
-          //       title: theme,
-          //       active: selected === theme,
-          //       onClick: () => {
-          //         updateGlobals({ theme });
-          //         onHide();
-          //       },
-          //     }))}
-          //   />
-          // );
-        }}
+  return (
+    <WithTooltip
+      placement="top"
+      trigger="click"
+      closeOnOutsideClick
+      tooltip={({ onHide }) => {
+        return (<div>
+          {backgrounds.map((background) => (
+            <Fragment key={background.theme}>
+              <ThemeHeader>
+                {background.theme}
+              </ThemeHeader>
+              <TooltipLinkList
+                links={background.items.map((item) => ({
+                  id: item.value,
+                  title: item.name,
+                  active: selected === item.value,
+                  onClick: () => {
+                    updateGlobals({ theme: background.theme });
+                    updateBackground({ value: '#000000', grid: false });
+                    onHide();
+                  },
+                }))}
+              />
+            </Fragment>
+          ))}
+        </div>)
+        // return (
+        //   <TooltipLinkList
+        //     links={themesList.map((theme) => ({
+        //       id: theme,
+        //       title: theme,
+        //       active: selected === theme,
+        //       onClick: () => {
+        //         updateGlobals({ theme });
+        //         onHide();
+        //       },
+        //     }))}
+        //   />
+        // );
+      }}
+    >
+      <IconButton
+        key={THEME_SWITCHER_ID}
+        active={!themeOverride}
+        title="Theme"
+        disabled={isLocked}
       >
-        <IconButton
-          key={THEME_SWITCHER_ID}
-          active={!themeOverride}
-          title="Theme"
-          disabled={isLocked}
-        >
-          <PaintBrushIcon />
-          {label && <IconButtonLabel>{label}</IconButtonLabel>}
-        </IconButton>
-      </WithTooltip>
-    );
-  }
-
-  return null;
+        <PaintBrushIcon />
+        {label && <IconButtonLabel>{label}</IconButtonLabel>}
+      </IconButton>
+    </WithTooltip>
+  );
 });

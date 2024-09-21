@@ -29,14 +29,24 @@ const IconButtonLabel = styled.div(({ theme }) => ({
   fontSize: theme.typography.size.s2 - 1,
 }));
 
+const ThemeHeader = styled.div(({ theme }) => ({
+  borderBottomColor: theme.appBorderColor,
+  borderBottomWidth: "1px",
+  borderBottomStyle: "solid",
+  borderTopColor: theme.appBorderColor,
+  borderTopWidth: "10px",
+  borderTopStyle: "solid",
+  paddingLeft: '10px',
+  paddingRight: '10px',
+  paddingTop: '7px',
+  paddingBottom: '7px',
+  fontWeight: '700'
+}));
+
 const hasMultipleThemes = (themesList: ThemeAddonState['themesList']) => themesList.length > 1;
 const hasTwoThemes = (themesList: ThemeAddonState['themesList']) => themesList.length === 2;
 
 export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
-
-  const themeParameters = useParameter(PARAMETER_KEY, {})
-
-  console.log(themeParameters)
 
   const { themeOverride, disable } = useParameter<ThemeParameters>(
     PARAM_KEY,
@@ -55,6 +65,8 @@ export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
     THEME_SWITCHER_ID,
     initializeThemeState
   );
+
+  console.log(themesList)
 
   const isLocked = KEY in storyGlobals || !!themeOverride;
 
@@ -99,6 +111,26 @@ export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
     );
   }
 
+  const backgrounds: {
+    theme: string;
+    items: { name: string; value: string }[];
+  }[] = [
+    {
+      theme: "a",
+      items: [
+        { name: "Light (bg-white)", value: "bg-white" },
+        { name: "Light (bg-gray-50)", value: "bg-gray-50" },
+      ]
+    },
+    {
+      theme: "b",
+      items: [
+        { name: "Dark (bg-dark-900)", value: "bg-dark-900" },
+        { name: "Dark (bg-dark-950)", value: "bg-dark-950" },
+      ]
+    }
+  ]
+
   if (hasMultipleThemes(themesList)) {
     return (
       <WithTooltip
@@ -106,19 +138,39 @@ export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
         trigger="click"
         closeOnOutsideClick
         tooltip={({ onHide }) => {
-          return (
-            <TooltipLinkList
-              links={themesList.map((theme) => ({
-                id: theme,
-                title: theme,
-                active: selected === theme,
-                onClick: () => {
-                  updateGlobals({ theme });
-                  onHide();
-                },
-              }))}
-            />
-          );
+          return (<div>
+            {backgrounds.map((background) => (
+              <Fragment key={background.theme}>
+                <ThemeHeader>
+                  {background.theme}
+                </ThemeHeader>
+                <TooltipLinkList
+                  links={background.items.map((item) => ({
+                    id: item.value,
+                    title: item.name,
+                    active: selected === item.value,
+                    onClick: () => {
+                      updateGlobals({ theme: background.theme });
+                      onHide();
+                    },
+                  }))}
+                />
+              </Fragment>
+            ))}
+          </div>)
+          // return (
+          //   <TooltipLinkList
+          //     links={themesList.map((theme) => ({
+          //       id: theme,
+          //       title: theme,
+          //       active: selected === theme,
+          //       onClick: () => {
+          //         updateGlobals({ theme });
+          //         onHide();
+          //       },
+          //     }))}
+          //   />
+          // );
         }}
       >
         <IconButton

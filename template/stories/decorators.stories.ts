@@ -31,6 +31,10 @@ const addStyleSheetDecorator = (storyFn: any) => {
         background-color: black;
         color: white;
       }
+      [data-theme="theme-c"], .theme-c {
+        background-color: red;
+        color: white;
+      }
     `;
 
     globalThis.document.body.appendChild(sheet);
@@ -61,39 +65,58 @@ export const WithThemeByClassName = {
   decorators: [
     withThemeByClassName({
       defaultTheme: 'a',
-      themes: { a: 'theme-a', b: 'theme-b' },
-      parentSelector: '#storybook-root > *',
-    }),
-  ],
-};
-
-export const WithThemeByDataAttribute = {
-  globals: {},
-  decorators: [
-    withThemeByDataAttribute({
-      defaultTheme: 'a',
-      themes: { a: 'theme-a', b: 'theme-b' },
-      parentSelector: '#storybook-root > *',
-    }),
-  ],
-};
-
-export const WithThemeFromJSXProvider = {
-  globals: {},
-  decorators: [
-    withThemeFromJSXProvider({
-      defaultTheme: 'a',
-      themes: { a: { custom: 'theme-a' }, b: { custom: 'theme-b' } },
-      Provider: ({ theme, children }: any) => {
-        // this is not was a normal provider looks like obviously, but this needs to work in non-react as well
-        // the timeout is to wait for the render to complete, as it's not possible to use the useEffect hook here
-        setTimeout(() => {
-          const element = globalThis.document.querySelector('#storybook-root > *');
-          element?.classList.remove('theme-a', 'theme-b');
-          element?.classList.add(theme.custom);
-        }, 16);
-        return children;
+      themes: {
+        a: {
+          class: 'theme-a',
+          backgroundColors: [
+            'bg-white'
+          ],
+        },
+        b: {
+          class: 'theme-b',
+          backgroundColors: [
+            'bg-black'
+          ],
+        },
+        c: {
+          class: 'theme-c',
+          backgroundColors: [
+            'bg-red-500'
+          ],
+        },
       },
+      parentSelector: '#storybook-root > *',
     }),
   ],
 };
+
+// export const WithThemeByDataAttribute = {
+//   globals: {},
+//   decorators: [
+//     withThemeByDataAttribute({
+//       defaultTheme: 'a',
+//       themes: { a: 'theme-a', b: 'theme-b' },
+//       parentSelector: '#storybook-root > *',
+//     }),
+//   ],
+// };
+//
+// export const WithThemeFromJSXProvider = {
+//   globals: {},
+//   decorators: [
+//     withThemeFromJSXProvider({
+//       defaultTheme: 'a',
+//       themes: { a: { custom: 'theme-a' }, b: { custom: 'theme-b' } },
+//       Provider: ({ theme, children }: any) => {
+//         // this is not was a normal provider looks like obviously, but this needs to work in non-react as well
+//         // the timeout is to wait for the render to complete, as it's not possible to use the useEffect hook here
+//         setTimeout(() => {
+//           const element = globalThis.document.querySelector('#storybook-root > *');
+//           element?.classList.remove('theme-a', 'theme-b');
+//           element?.classList.add(theme.custom);
+//         }, 16);
+//         return children;
+//       },
+//     }),
+//   ],
+// };

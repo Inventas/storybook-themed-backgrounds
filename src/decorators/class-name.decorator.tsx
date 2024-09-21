@@ -2,9 +2,15 @@ import { useEffect } from 'storybook/internal/preview-api';
 import type { DecoratorFunction, Renderer } from 'storybook/internal/types';
 
 import { initializeThemeState, pluckThemeFromContext, useThemeParameters } from './helpers';
+import { Backgrounds } from "../constants";
+
+export interface ClassNameThemeConfiguration {
+  class: string,
+  backgroundColors: Backgrounds,
+}
 
 export interface ClassNameStrategyConfiguration {
-  themes: Record<string, string>;
+  themes: Record<string, ClassNameThemeConfiguration>;
   defaultTheme: string;
   parentSelector?: string;
 }
@@ -33,16 +39,18 @@ export const withThemeByClassName = <TRenderer extends Renderer = Renderer>({
         return;
       }
 
+      // console.log(Object.entries(themes))
+
       Object.entries(themes)
         .filter(([themeName]) => themeName !== selectedThemeName)
-        .forEach(([themeName, className]) => {
-          const classes = classStringToArray(className);
+        .forEach(([themeName, config]) => {
+          const classes = classStringToArray(config.class);
           if (classes.length > 0) {
             parentElement.classList.remove(...classes);
           }
         });
 
-      const newThemeClasses = classStringToArray(themes[selectedThemeName]);
+      const newThemeClasses = classStringToArray(themes[selectedThemeName].class);
 
       if (newThemeClasses.length > 0) {
         parentElement.classList.add(...newThemeClasses);

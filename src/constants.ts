@@ -4,7 +4,6 @@ export const GLOBAL_KEY = 'theme' as const;
 export const ADDON_ID = `storybook/${PARAM_KEY}` as const;
 export const THEME_SWITCHER_ID = `${ADDON_ID}/theme-switcher` as const;
 
-
 export interface ThemeAddonState {
   themesList: string[];
   themeDefault?: string;
@@ -27,3 +26,7 @@ export const THEMING_EVENTS = {
   REGISTER_THEMES: `${ADDON_ID}/REGISTER_THEMES`,
   UPDATE: `${ADDON_ID}/UPDATE`,
 } as const;
+
+// New
+
+export type Backgrounds = string[];

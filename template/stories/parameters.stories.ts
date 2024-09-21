@@ -48,6 +48,16 @@ export default {
   parameters: {
     chromatic: { disable: true },
     themes: { disable: false },
+    "tailwind-themes": {
+      themes: {
+        light: {
+          white: { name: "white", value: "#ffffff" },
+        },
+        dark: {
+          "dark-700": { name: "dark-700", value: "#3f3f46" },
+        }
+      }
+    }
   },
   decorators: [addStyleSheetDecorator],
 };
@@ -57,6 +67,14 @@ export const SetOverride = {
     themes: {
       themeOverride: 'b',
     },
+    "tailwind-themes": {
+      light: {
+        white: { name: "white", value: "#ffffff" },
+      },
+      dark: {
+        "dark-700": { name: "dark-700", value: "#3f3f46" },
+      }
+    }
   },
   decorators: [
     withThemeByClassName({

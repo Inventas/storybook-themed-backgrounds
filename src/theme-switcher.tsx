@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import React from 'react';
+import React, { Fragment, memo, useCallback, useState } from 'react';
 
 import { IconButton, TooltipLinkList, WithTooltip } from 'storybook/internal/components';
 import {
@@ -11,9 +11,11 @@ import {
 } from 'storybook/internal/manager-api';
 import { styled } from 'storybook/internal/theming';
 
-import { PaintBrushIcon } from '@storybook/icons';
+import { PaintBrushIcon, CircleIcon, GridIcon, PhotoIcon, RefreshIcon } from '@storybook/icons';
 
-import type { ThemeAddonState, ThemeParameters } from './constants';
+import { DEFAULT_BACKGROUNDS } from './defaults';
+import type { Background, BackgroundMap, Config, GlobalStateUpdate } from './types';
+import { PARAMETER_KEY, ThemeAddonState, ThemeParameters } from "./constants";
 import {
   DEFAULT_ADDON_STATE,
   DEFAULT_THEME_PARAMETERS,
@@ -31,6 +33,11 @@ const hasMultipleThemes = (themesList: ThemeAddonState['themesList']) => themesL
 const hasTwoThemes = (themesList: ThemeAddonState['themesList']) => themesList.length === 2;
 
 export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
+
+  const themeParameters = useParameter(PARAMETER_KEY, {})
+
+  console.log(themeParameters)
+
   const { themeOverride, disable } = useParameter<ThemeParameters>(
     PARAM_KEY,
     DEFAULT_THEME_PARAMETERS

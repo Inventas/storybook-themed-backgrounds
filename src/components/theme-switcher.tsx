@@ -15,7 +15,7 @@ import { PaintBrushIcon, CircleIcon, GridIcon, PhotoIcon, RefreshIcon } from '@s
 
 import { DEFAULT_BACKGROUNDS } from '../defaults';
 import type { Background, BackgroundMap, Config, BackgroundGlobalStateUpdate } from '../types';
-import { BACKGROUND_KEY, PARAMETER_KEY, ThemeAddonState, ThemeParameters } from "../constants";
+import { BACKGROUND_KEY, Color, GenericColorMap, PARAMETER_KEY, ThemeAddonState, ThemeParameters } from "../constants";
 import {
   DEFAULT_ADDON_STATE,
   DEFAULT_THEME_PARAMETERS,
@@ -101,25 +101,21 @@ export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
     [updateGlobals]
   );
 
-  const backgrounds: {
-    theme: string;
-    items: { name: string; value: string }[];
-  }[] = [
-    {
-      theme: "a",
-      items: [
-        { name: "Light (bg-white)", value: "bg-white" },
-        { name: "Light (bg-gray-50)", value: "bg-gray-50" },
-      ]
-    },
-    {
-      theme: "b",
-      items: [
-        { name: "Dark (bg-dark-900)", value: "bg-dark-900" },
-        { name: "Dark (bg-dark-950)", value: "bg-dark-950" },
-      ]
-    }
-  ]
+  const defaultColorMap: GenericColorMap = themesList.reduce((acc, theme) => {
+    acc[theme] = {theme: { name: theme, value: '#000000' }};
+    return acc;
+  }, {} as GenericColorMap);
+
+  const themeBackgroundsMapping = useParameter<GenericColorMap>("tailwind-themes", defaultColorMap);
+
+  const backgrounds = Object.entries(themeBackgroundsMapping).map(([theme, colors]) => ({
+    theme,
+    items: Object.entries(colors).map(([key, color]) => ({
+      name: `${theme} (${color.name})`,
+      value: color.value,
+      key: key
+    }))
+  }));
 
   return (
     <WithTooltip
@@ -137,10 +133,10 @@ export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
                 links={background.items.map((item) => ({
                   id: item.value,
                   title: item.name,
-                  active: selected === item.value,
+                  active: selected === item.key,
                   onClick: () => {
                     updateGlobals({ theme: background.theme });
-                    updateBackground({ value: '#000000', grid: false });
+                    updateBackground({ value: item.value, grid: false });
                     onHide();
                   },
                 }))}
@@ -148,19 +144,6 @@ export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
             </Fragment>
           ))}
         </div>)
-        // return (
-        //   <TooltipLinkList
-        //     links={themesList.map((theme) => ({
-        //       id: theme,
-        //       title: theme,
-        //       active: selected === theme,
-        //       onClick: () => {
-        //         updateGlobals({ theme });
-        //         onHide();
-        //       },
-        //     }))}
-        //   />
-        // );
       }}
     >
       <IconButton

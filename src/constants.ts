@@ -31,3 +31,8 @@ export const THEMING_EVENTS = {
 // New
 
 export type Backgrounds = string[];
+export interface Color {
+  name: string;
+  value: string;
+}
+export type GenericColorMap = Record<string, Record<string, Color>>;

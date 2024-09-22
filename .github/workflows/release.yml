@@ -18,7 +18,7 @@ jobs:
           node-version: 22.x
 
       - name: Install dependencies
-        run: npm install --ignore-scripts
+        run: npm install --ignore-scripts --package-lock-only
 
       - name: Create Release
         env:

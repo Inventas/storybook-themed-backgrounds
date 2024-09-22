@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import React, { Fragment, memo, useCallback, useState } from 'react';
+import React, { Fragment, useCallback } from 'react';
 
 import { IconButton, TooltipLinkList, WithTooltip } from 'storybook/internal/components';
 import {
@@ -11,11 +11,10 @@ import {
 } from 'storybook/internal/manager-api';
 import { styled } from 'storybook/internal/theming';
 
-import { PaintBrushIcon, CircleIcon, GridIcon, PhotoIcon, RefreshIcon } from '@storybook/icons';
+import { PaintBrushIcon, CircleIcon } from '@storybook/icons';
 
-import { DEFAULT_BACKGROUNDS } from '../defaults';
-import type { Background, BackgroundMap, Config, BackgroundGlobalStateUpdate } from '../types';
-import { BACKGROUND_KEY, Color, GenericColorMap, PARAMETER_KEY, ThemeAddonState, ThemeParameters } from "../constants";
+import type { BackgroundConfig, BackgroundGlobalStateUpdate } from '../types';
+import { BACKGROUND_KEY, ThemeAddonState, ThemeMap, ThemeParameters } from "../constants";
 import {
   DEFAULT_ADDON_STATE,
   DEFAULT_THEME_PARAMETERS,
@@ -43,10 +42,9 @@ const ThemeHeader = styled.div(({ theme }) => ({
   fontWeight: '700'
 }));
 
-const hasMultipleThemes = (themesList: ThemeAddonState['themesList']) => themesList.length > 1;
-const hasTwoThemes = (themesList: ThemeAddonState['themesList']) => themesList.length === 2;
-
 export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
+
+  // ----------- Theme Config -----------
 
   const { themeOverride, disable } = useParameter<ThemeParameters>(
     PARAM_KEY,
@@ -66,8 +64,6 @@ export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
     initializeThemeState
   );
 
-  console.log(themesList)
-
   const isLocked = KEY in storyGlobals || !!themeOverride;
 
   useChannel({
@@ -80,6 +76,47 @@ export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
     },
   });
 
+  // ----------- Background Config -----------
+
+  const backgroundConfig = useParameter<BackgroundConfig>("backgrounds");
+  const { options = {} } = backgroundConfig || {};
+  const themeMap = useParameter<ThemeMap>("theme-map", {});
+
+  // Iterate over themeMap and get the color from options
+  const themeColors = Object.entries(themeMap).map(([theme, backgroundKeys]) => {
+    return backgroundKeys.map(key => {
+      const color = options[key];
+      return {
+        name: `${theme} (${color?.name || key})`,
+        value: color?.value || '',
+        key: key
+      };
+    });
+  });
+
+  const backgrounds = Object.entries(themeMap).map(([theme, backgroundKeys]) => ({
+    theme,
+    items: backgroundKeys.map(key => {
+      const color = options[key];
+      return {
+        name: `${theme} (${color?.name || key})`,
+        value: color?.value || '',
+        key: key
+      };
+    }).filter(item => item.value !== '')
+  }));
+
+  const updateBackground = useCallback(
+    (input: BackgroundGlobalStateUpdate) => {
+      updateGlobals({
+        [BACKGROUND_KEY]: input,
+      });
+    },
+    [updateGlobals]
+  );
+
+  // ----------- Render -----------
+
   const themeName = selected || themeDefault;
   let label = '';
   if (isLocked) {
@@ -91,31 +128,6 @@ export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
   if (disable) {
     return null;
   }
-
-  const updateBackground = useCallback(
-    (input: BackgroundGlobalStateUpdate) => {
-      updateGlobals({
-        [BACKGROUND_KEY]: input,
-      });
-    },
-    [updateGlobals]
-  );
-
-  const defaultColorMap: GenericColorMap = themesList.reduce((acc, theme) => {
-    acc[theme] = {theme: { name: theme, value: '#000000' }};
-    return acc;
-  }, {} as GenericColorMap);
-
-  const themeBackgroundsMapping = useParameter<GenericColorMap>("tailwind-themes", defaultColorMap);
-
-  const backgrounds = Object.entries(themeBackgroundsMapping).map(([theme, colors]) => ({
-    theme,
-    items: Object.entries(colors).map(([key, color]) => ({
-      name: `${theme} (${color.name})`,
-      value: color.value,
-      key: key
-    }))
-  }));
 
   return (
     <WithTooltip
@@ -134,6 +146,7 @@ export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
                   id: item.value,
                   title: item.name,
                   active: selected === item.key,
+                  icon: <CircleIcon color={item?.value || 'grey'} />,
                   onClick: () => {
                     updateGlobals({ theme: background.theme });
                     updateBackground({ value: item.value, grid: false });

@@ -1,4 +1,3 @@
-export const PARAMETER_KEY = 'tailwind-themes' as const;
 export const PARAM_KEY = 'themes' as const;
 export const GLOBAL_KEY = 'theme' as const;
 export const BACKGROUND_KEY = 'backgrounds' as const;
@@ -16,7 +15,6 @@ export const DEFAULT_ADDON_STATE: ThemeAddonState = {
 };
 
 export interface ThemeParameters {
-
   themeOverride?: string;
   disable?: boolean;
 }
@@ -31,8 +29,4 @@ export const THEMING_EVENTS = {
 // New
 
 export type Backgrounds = string[];
-export interface Color {
-  name: string;
-  value: string;
-}
-export type GenericColorMap = Record<string, Record<string, Color>>;
+export type ThemeMap = Record<string, Backgrounds>;

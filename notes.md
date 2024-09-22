@@ -41,11 +41,3 @@ const preview = {
   ],
 }
 ```
-
-```js
-parameters: {
-  "tailwind-themes": {
-    
-  }
-}
-```

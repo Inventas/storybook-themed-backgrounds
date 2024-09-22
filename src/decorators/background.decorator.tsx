@@ -7,7 +7,7 @@ import type {
 
 import { PARAM_KEY as KEY } from '../constants';
 import { DEFAULT_BACKGROUNDS } from '../defaults';
-import type { Config } from '../types';
+import type { BackgroundConfig } from '../types';
 import { addBackgroundStyle, clearStyles, isReduceMotionEnabled } from '../utils';
 
 const BG_SELECTOR_BASE = `addon-backgrounds`;
@@ -22,7 +22,7 @@ export const withBackgroundAndGrid = (
   const {
     options = DEFAULT_BACKGROUNDS,
     disable,
-  } = (parameters[KEY] || {}) as Config;
+  } = (parameters[KEY] || {}) as BackgroundConfig;
   const data = globals[KEY] || {};
   const backgroundName: string | undefined = data.value;
 

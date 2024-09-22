@@ -5,7 +5,7 @@ export interface Background {
 
 export type BackgroundMap = Record<string, Background>;
 
-export interface Config {
+export interface BackgroundConfig {
   options: BackgroundMap;
   disable: boolean;
 }

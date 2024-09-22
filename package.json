@@ -73,6 +73,9 @@
     "vite": "^5.3.5",
     "zx": "^7.2.3"
   },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "*"
+  },
   "peerDependencies": {
     "storybook": "^8.3.0 || 0.0.0-pr-26654-sha-49d01553"
   },

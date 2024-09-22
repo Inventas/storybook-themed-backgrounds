@@ -19,8 +19,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install -g zx
-          npm install --ignore-scripts --package-lock-only
+          npm install --ignore-scripts
 
       - name: Create Release
         env:

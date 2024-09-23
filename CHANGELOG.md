@@ -1,3 +1,18 @@
+# v0.1.8 (Mon Sep 23 2024)
+
+#### ⚠️ Pushed to `main`
+
+- improved plugin ([@LambdaDigamma](https://github.com/LambdaDigamma))
+- fixed background handling ([@LambdaDigamma](https://github.com/LambdaDigamma))
+- wip ([@LambdaDigamma](https://github.com/LambdaDigamma))
+- fixed preview file ([@LambdaDigamma](https://github.com/LambdaDigamma))
+
+#### Authors: 1
+
+- Lennart Fischer ([@LambdaDigamma](https://github.com/LambdaDigamma))
+
+---
+
 # v0.1.7 (Mon Sep 23 2024)
 
 #### ⚠️ Pushed to `main`

@@ -1,3 +1,15 @@
+# v0.1.7 (Mon Sep 23 2024)
+
+#### ⚠️ Pushed to `main`
+
+- improved default preview and added background decorator ([@LambdaDigamma](https://github.com/LambdaDigamma))
+
+#### Authors: 1
+
+- Lennart Fischer ([@LambdaDigamma](https://github.com/LambdaDigamma))
+
+---
+
 # v0.1.6 (Sun Sep 22 2024)
 
 #### ⚠️ Pushed to `main`

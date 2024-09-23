@@ -1,4 +1,5 @@
 import type { Preview } from "@storybook/react";
+import { withBackgroundAndGrid } from "../src";
 
 const preview: Preview = {
   parameters: {
@@ -9,6 +10,7 @@ const preview: Preview = {
       },
     },
 
+    decorators: [withBackgroundAndGrid]
     // backgrounds: {
     //   options: {
     //     // --- Light ---

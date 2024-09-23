@@ -2,7 +2,7 @@ import { addons, useParameter } from 'storybook/internal/preview-api';
 import type { StoryContext } from 'storybook/internal/types';
 
 import type { ThemeParameters } from '../constants';
-import { DEFAULT_THEME_PARAMETERS, GLOBAL_KEY, PARAM_KEY, THEMING_EVENTS } from '../constants';
+import { DEFAULT_THEME_PARAMETERS, GLOBAL_KEY, THEME_MAP_PARAMETER_KEY, THEMING_EVENTS } from '../constants';
 
 /**
  * @param StoryContext
@@ -13,7 +13,7 @@ export function pluckThemeFromContext({ globals }: StoryContext): string {
 }
 
 export function useThemeParameters(): ThemeParameters {
-  return useParameter<ThemeParameters>(PARAM_KEY, DEFAULT_THEME_PARAMETERS) as ThemeParameters;
+  return useParameter<ThemeParameters>(THEME_MAP_PARAMETER_KEY, DEFAULT_THEME_PARAMETERS) as ThemeParameters;
 }
 
 export function initializeThemeState(themeNames: string[], defaultTheme: string) {

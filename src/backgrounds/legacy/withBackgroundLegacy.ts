@@ -5,7 +5,7 @@ import type {
   PartialStoryFn as StoryFunction,
 } from 'storybook/internal/types';
 
-import { PARAM_KEY as BACKGROUNDS_PARAM_KEY } from '../constants';
+import { BACKGROUND_PARAM_KEY as BACKGROUNDS_PARAM_KEY } from '../constants';
 import { addBackgroundStyle, clearStyles, isReduceMotionEnabled } from '../utils';
 import { getBackgroundColorByName } from './getBackgroundColorByName';
 

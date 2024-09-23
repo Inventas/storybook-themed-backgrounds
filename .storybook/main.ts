@@ -21,18 +21,16 @@ const config: StorybookConfig = {
     "@storybook/addon-toolbars",
     "@storybook/addon-measure",
     "@storybook/addon-outline",
+    "@storybook/addon-backgrounds",
     "./local-preset.js",
   ],
   framework: {
     name: "@storybook/react-vite",
     options: {},
   },
-  docs: {
-    autodocs: "tag",
-  },
 
   features: {
-    backgroundsStoryGlobals: true
+    backgroundsStoryGlobals: false,
   }
 };
 export default config;

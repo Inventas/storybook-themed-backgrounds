@@ -9,7 +9,7 @@ import { PhotoIcon } from '@storybook/icons';
 
 import memoize from 'memoizerific';
 
-import { PARAM_KEY as BACKGROUNDS_PARAM_KEY } from '../constants';
+import { BACKGROUND_PARAM_KEY as BACKGROUNDS_PARAM_KEY } from '../constants';
 import type { Background } from '../types';
 import { ColorIcon } from './ColorIcon';
 import { getBackgroundColorByName } from './getBackgroundColorByName';

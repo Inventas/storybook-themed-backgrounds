@@ -5,7 +5,7 @@ import type {
   PartialStoryFn as StoryFunction,
 } from 'storybook/internal/types';
 
-import { PARAM_KEY as BACKGROUNDS_PARAM_KEY } from '../constants';
+import { BACKGROUND_PARAM_KEY as BACKGROUNDS_PARAM_KEY } from '../constants';
 import { addGridStyle, clearStyles } from '../utils';
 
 export const withGrid = (StoryFn: StoryFunction<Renderer>, context: StoryContext<Renderer>) => {

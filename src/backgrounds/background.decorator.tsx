@@ -5,7 +5,7 @@ import type {
   PartialStoryFn as StoryFunction,
 } from 'storybook/internal/types';
 
-import { PARAM_KEY as KEY } from './constants';
+import { BACKGROUND_PARAM_KEY as KEY } from './constants';
 import { DEFAULT_BACKGROUNDS } from './defaults';
 import type { Config, GridConfig } from './types';
 import { addBackgroundStyle, addGridStyle, clearStyles, isReduceMotionEnabled } from './utils';
@@ -34,6 +34,16 @@ export const withBackgroundAndGrid = (
   const data = globals[KEY] || {};
   const backgroundName: string | undefined = data.value;
 
+  console.log("globals: ", globals);
+  console.log("parameters: ", parameters);
+  console.log("viewMode: ", viewMode);
+  console.log("id: ", id);
+  console.log("options: ", options);
+  console.log("disable: ", disable);
+  console.log("grid: ", grid);
+  console.log("data: ", data);
+  console.log("backgroundName: ", backgroundName);
+
   const item = backgroundName ? options[backgroundName] : undefined;
   const value = item?.value || 'transparent';
 
@@ -52,6 +62,13 @@ export const withBackgroundAndGrid = (
   const backgroundTarget = viewMode === 'docs' ? id : null;
 
   useEffect(() => {
+
+    console.log("backgroundSelector: ", backgroundSelector);
+    console.log("backgroundSelectorId: ", backgroundSelectorId);
+    console.log("backgroundTarget: ", backgroundTarget);
+    console.log("shownBackground: ", shownBackground);
+    console.log("value: ", value);
+
     const backgroundStyles = `
     ${backgroundSelector} {
       background: ${value} !important;

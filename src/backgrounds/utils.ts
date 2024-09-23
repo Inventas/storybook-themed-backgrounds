@@ -8,6 +8,7 @@ export const isReduceMotionEnabled = () => {
 };
 
 export const clearStyles = (selector: string | string[]) => {
+  console.log('clearStyles');
   const selectors = Array.isArray(selector) ? selector : [selector];
   selectors.forEach(clearStyle);
 };
@@ -34,6 +35,9 @@ export const addGridStyle = (selector: string, css: string) => {
 };
 
 export const addBackgroundStyle = (selector: string, css: string, storyId: string | null) => {
+  console.log('addBackgroundStyle');
+  console.log(selector, css, storyId);
+
   const existingStyle = document.getElementById(selector) as HTMLElement;
   if (existingStyle) {
     if (existingStyle.innerHTML !== css) {

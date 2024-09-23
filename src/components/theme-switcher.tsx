@@ -14,14 +14,15 @@ import { styled } from 'storybook/internal/theming';
 import { PaintBrushIcon, CircleIcon } from '@storybook/icons';
 
 import type { Config as BackgroundConfig, GlobalState as BackgroundGlobalStateUpdate } from '../backgrounds/types';
-import { BACKGROUND_KEY, ThemeAddonState, ThemeMap, ThemeParameters } from "../theme/constants";
+import { BACKGROUND_PARAM_KEY, BACKGROUND_PARAM_KEY as BACKGROUND_KEY } from "../backgrounds/constants";
 import {
   DEFAULT_ADDON_STATE,
   DEFAULT_THEME_PARAMETERS,
   GLOBAL_KEY as KEY,
-  PARAM_KEY,
+  THEME_MAP_PARAMETER_KEY,
   THEME_SWITCHER_ID,
   THEMING_EVENTS,
+  ThemeAddonState, ThemeMap, ThemeParameters
 } from '../theme/constants';
 
 const IconButtonLabel = styled.div(({ theme }) => ({
@@ -47,7 +48,7 @@ export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
   // ----------- Theme Config -----------
 
   const { themeOverride, disable } = useParameter<ThemeParameters>(
-    PARAM_KEY,
+    THEME_MAP_PARAMETER_KEY,
     DEFAULT_THEME_PARAMETERS
   ) as ThemeParameters;
   const [{ theme: selected }, updateGlobals, storyGlobals] = useGlobals();
@@ -78,9 +79,9 @@ export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
 
   // ----------- Background Config -----------
 
-  const backgroundConfig = useParameter<BackgroundConfig>("backgrounds");
+  const backgroundConfig = useParameter<BackgroundConfig>(BACKGROUND_PARAM_KEY);
   const { options = {} } = backgroundConfig || {};
-  const themeMap = useParameter<ThemeMap>("theme-map", {});
+  const themeMap = useParameter<ThemeMap>(THEME_MAP_PARAMETER_KEY, {});
 
   const backgrounds = Object.entries(themeMap).map(([theme, backgroundKeys]) => ({
     theme,

@@ -1,6 +1,6 @@
 import { addons, types } from 'storybook/internal/manager-api';
 
-import { ADDON_ID, PARAM_KEY, THEME_SWITCHER_ID } from './theme/constants';
+import { ADDON_ID, THEME_MAP_PARAMETER_KEY, THEME_SWITCHER_ID } from './theme/constants';
 import { ThemeSwitcher } from './components/theme-switcher';
 
 addons.register(ADDON_ID, () => {
@@ -9,6 +9,6 @@ addons.register(ADDON_ID, () => {
     type: types.TOOL,
     match: ({ viewMode, tabId }) => !!(viewMode && viewMode.match(/^(story|docs)$/)) && !tabId,
     render: ThemeSwitcher,
-    paramKey: PARAM_KEY,
+    // paramKey: THEME_MAP_PARAMETER,
   });
 });

@@ -1,6 +1,6 @@
 import type { BackgroundMap } from './types';
 
 export const DEFAULT_BACKGROUNDS: BackgroundMap = {
-  light: { name: 'light', value: '#F8F8F8' },
-  dark: { name: 'dark', value: '#333' },
+  white: { name: 'white', value: '#ffffff' },
+  black: { name: 'black', value: '#000000' },
 };

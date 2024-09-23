@@ -13,12 +13,14 @@ export const decorators: Addon_DecoratorFunction[] = [withBackgroundAndGrid]
 
 export const parameters = {
   [THEME_MAP_PARAMETER_KEY]: {
-    a: [
-      "white",
-    ],
-    b: [
-      "black",
-    ]
+    options: {
+      light: [
+        "white",
+      ],
+      dark: [
+        "black",
+      ]
+    }
   },
   [BACKGROUND_KEY]: {
     grid: {

@@ -22,8 +22,9 @@ import {
   THEME_MAP_PARAMETER_KEY,
   THEME_SWITCHER_ID,
   THEMING_EVENTS,
-  ThemeAddonState, ThemeMap, ThemeParameters
-} from '../theme/constants';
+  ThemeAddonState, ThemeMap, ThemeParameters, ThemeMapConfig, THEME_PARAMETER_KEY
+} from "../theme/constants";
+import { useThemeParameters } from "../theme/decorators/helpers";
 
 const IconButtonLabel = styled.div(({ theme }) => ({
   fontSize: theme.typography.size.s2 - 1,
@@ -48,7 +49,7 @@ export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
   // ----------- Theme Config -----------
 
   const { themeOverride, disable } = useParameter<ThemeParameters>(
-    THEME_MAP_PARAMETER_KEY,
+    THEME_PARAMETER_KEY,
     DEFAULT_THEME_PARAMETERS
   ) as ThemeParameters;
   const [{ theme: selected }, updateGlobals, storyGlobals] = useGlobals();
@@ -81,9 +82,8 @@ export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
 
   const backgroundConfig = useParameter<BackgroundConfig>(BACKGROUND_PARAM_KEY);
   const { options = {} } = backgroundConfig || {};
-  const themeMap = useParameter<ThemeMap>(THEME_MAP_PARAMETER_KEY, {});
-
-  console.log("object", Object.entries(options))
+  const themeConfig = useParameter<ThemeMapConfig>(THEME_MAP_PARAMETER_KEY, { options: {} });
+  const themeMap = themeConfig.options || {};
 
   const backgrounds = Object.entries(themeMap).map(([theme, backgroundKeys]) => ({
     theme,

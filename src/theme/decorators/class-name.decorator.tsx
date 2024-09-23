@@ -39,8 +39,6 @@ export const withThemeByClassName = <TRenderer extends Renderer = Renderer>({
         return;
       }
 
-      // console.log(Object.entries(themes))
-
       Object.entries(themes)
         .filter(([themeName]) => themeName !== selectedThemeName)
         .forEach(([themeName, config]) => {

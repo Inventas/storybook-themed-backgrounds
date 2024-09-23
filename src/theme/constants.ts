@@ -1,5 +1,6 @@
 export const ADDON_ID = `storybook/themed-backgrounds` as const;
 export const THEME_MAP_PARAMETER_KEY = 'themes-map' as const;
+export const THEME_PARAMETER_KEY = 'theme' as const;
 export const GLOBAL_KEY = 'theme' as const;
 export const THEME_SWITCHER_ID = `${ADDON_ID}/theme-switcher` as const;
 
@@ -29,3 +30,6 @@ export const THEMING_EVENTS = {
 
 export type Backgrounds = string[];
 export type ThemeMap = Record<string, Backgrounds>;
+export interface ThemeMapConfig {
+  options: ThemeMap;
+}

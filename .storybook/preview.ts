@@ -8,6 +8,7 @@ const preview: Preview = {
         date: /Date$/,
       },
     },
+
     backgrounds: {
       options: {
         // --- Light ---
@@ -36,9 +37,6 @@ const preview: Preview = {
         "dark-950",
       ]
     },
-  },
-  initialGlobals: {
-    background: { value: "light" },
   },
 };
 

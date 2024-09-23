@@ -1,6 +1,3 @@
-// Utils from @storybook/addon-backgrounds
-// Copied from https://github.com/storybookjs/storybook/blob/221f6a78332adb67450ad94f172aac6cf490de12/code/addons/backgrounds/src/utils.ts
-
 import { global } from '@storybook/global';
 
 const { document, window } = global;
@@ -19,6 +16,20 @@ const clearStyle = (selector: string) => {
   const element = document.getElementById(selector) as HTMLElement;
   if (element) {
     element.parentElement?.removeChild(element);
+  }
+};
+
+export const addGridStyle = (selector: string, css: string) => {
+  const existingStyle = document.getElementById(selector) as HTMLElement;
+  if (existingStyle) {
+    if (existingStyle.innerHTML !== css) {
+      existingStyle.innerHTML = css;
+    }
+  } else {
+    const style = document.createElement('style') as HTMLElement;
+    style.setAttribute('id', selector);
+    style.innerHTML = css;
+    document.head.appendChild(style);
   }
 };
 

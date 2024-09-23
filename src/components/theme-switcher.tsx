@@ -13,8 +13,8 @@ import { styled } from 'storybook/internal/theming';
 
 import { PaintBrushIcon, CircleIcon } from '@storybook/icons';
 
-import type { BackgroundConfig, BackgroundGlobalStateUpdate } from '../types';
-import { BACKGROUND_KEY, ThemeAddonState, ThemeMap, ThemeParameters } from "../constants";
+import type { Config as BackgroundConfig, GlobalState as BackgroundGlobalStateUpdate } from '../backgrounds/types';
+import { BACKGROUND_KEY, ThemeAddonState, ThemeMap, ThemeParameters } from "../theme/constants";
 import {
   DEFAULT_ADDON_STATE,
   DEFAULT_THEME_PARAMETERS,
@@ -22,7 +22,7 @@ import {
   PARAM_KEY,
   THEME_SWITCHER_ID,
   THEMING_EVENTS,
-} from '../constants';
+} from '../theme/constants';
 
 const IconButtonLabel = styled.div(({ theme }) => ({
   fontSize: theme.typography.size.s2 - 1,

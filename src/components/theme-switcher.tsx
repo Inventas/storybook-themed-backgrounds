@@ -82,18 +82,6 @@ export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
   const { options = {} } = backgroundConfig || {};
   const themeMap = useParameter<ThemeMap>("theme-map", {});
 
-  // Iterate over themeMap and get the color from options
-  const themeColors = Object.entries(themeMap).map(([theme, backgroundKeys]) => {
-    return backgroundKeys.map(key => {
-      const color = options[key];
-      return {
-        name: `${theme} (${color?.name || key})`,
-        value: color?.value || '',
-        key: key
-      };
-    });
-  });
-
   const backgrounds = Object.entries(themeMap).map(([theme, backgroundKeys]) => ({
     theme,
     items: backgroundKeys.map(key => {
@@ -144,7 +132,7 @@ export const ThemeSwitcher = React.memo(function ThemeSwitcher() {
               <TooltipLinkList
                 links={background.items.map((item) => ({
                   id: item.value,
-                  title: item.name,
+                  title: item.name + " " + item.value,
                   active: selected === item.key,
                   icon: <CircleIcon color={item?.value || 'grey'} />,
                   onClick: () => {

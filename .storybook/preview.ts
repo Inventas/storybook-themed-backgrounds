@@ -11,7 +11,7 @@ const preview: Preview = {
     backgrounds: {
       options: {
         // --- Light ---
-        white: { name: 'White', value: '"#ffffff' },
+        white: { name: 'White', value: '#ffffff' },
         "gray-50": { name: "Gray 50", value: "#f9fafb" },
         "gray-100": { name: "Gray 100", value: "#f3f4f6" },
         "gray-200": { name: "Gray 200", value: "#e5e7eb" },

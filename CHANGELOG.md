@@ -1,3 +1,15 @@
+# v0.1.9 (Fri Aug 15 2025)
+
+#### ⚠️ Pushed to `main`
+
+- added support for storybook 9 ([@LambdaDigamma](https://github.com/LambdaDigamma))
+
+#### Authors: 1
+
+- Lennart Fischer ([@LambdaDigamma](https://github.com/LambdaDigamma))
+
+---
+
 # v0.1.8 (Mon Sep 23 2024)
 
 #### ⚠️ Pushed to `main`
